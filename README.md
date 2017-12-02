@@ -47,3 +47,13 @@ Like so:
 ```
 
 After receiving this update the client can either request more parameters or close the connection. The output XML of the service should be ‘prettyfied’, similar to the examples (indent child nodes), so that when a human ‘client’ queries the system the output is easy to read. When the service is shut-down and re-started it should start up with the last known state for all the parameters. When a client sends an invalid request the service should return nothing and close the connection.
+
+## The Implementation
+
+### Activity Diagrams
+The following activity diagrams have been created in VisualParadigm community edition, the project can be found in the VisualParadigm directory.
+
+#### Measuring Client
+This is the activity diagram between the Measuring Client and the Central Service.
+
+![Measuring Client activity diagram](/Documentation/UML/Measurement Client Activity Diagram.jpg?raw=true "Measuring Client activity diagram")

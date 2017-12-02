@@ -62,3 +62,8 @@ This is the activity diagram between the Measuring Client and the Central Servic
 This is the activity diagram between the Request Client and the Central Service.
 
 ![Request Client activity diagram](/Documentation/UML/Request_Client_Activity_Diagram.jpg?raw=true "Request Client activity diagram")
+
+## Class Diagram
+The following is a diagram of the classes to be used in the program and how they interact with oneanother.
+
+![Class diagram](/Documentation/UML/Class_Diagram.jpg?raw=true "Class diagram")

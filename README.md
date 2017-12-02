@@ -57,3 +57,8 @@ The following activity diagrams have been created in VisualParadigm community ed
 This is the activity diagram between the Measuring Client and the Central Service.
 
 ![Measuring Client activity diagram](/Documentation/UML/Measurement Client Activity Diagram.jpg?raw=true "Measuring Client activity diagram")
+
+#### Request Client
+This is the activity diagram between the Request Client and the Central Service.
+
+![Request Client activity diagram](/Documentation/UML/Request Client Activity Diagram.jpg?raw=true "Request Client activity diagram")

@@ -1,18 +1,16 @@
 # Quby Assessment
 
 ## The Task
-
 We have some systems that gather samples from all kinds of measurements and report them to a service. There are other systems that request the current value for some of these parameters from this service. Your assignment is to implement this service. It is to be implemented in the C language. We suggest using a library called ezxml to handle the XML parts of the assignment. You are free to modify it where needed.
 
 This service has 2 implementation platforms:
-l. An Embedded IoT platform for the Client
-    l. Battery Operated
-    l. Connects every 15 min to the server
-    l. Uses an MCU ((we suggest a ARM M0+ one, you can change it but you’ll be requested why) with 32KB RAM and 256KB Flash.
-l. An Linux Platform for the Server
+1. An Embedded IoT platform for the Client
+    1. Battery Operated
+    1. Connects every 15 min to the server
+    1. Uses an MCU ((we suggest a ARM M0+ one, you can change it but you’ll be requested why) with 32KB RAM and 256KB Flash.
+1. An Linux Platform for the Server
 
 ### Detailed description
-
 The measuring clients report these measurements by sending a XML messages over TCP to port 6423 of some registry service .The xml messages consist of a root tag called ‘update’, inside it there is any number of (unique) keys as tags, with values as text content.
 
 For example:

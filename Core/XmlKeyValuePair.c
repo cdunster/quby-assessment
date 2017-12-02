@@ -23,7 +23,7 @@
  *
  * @return      true if the contents of key and value were assigned to pair.
  */
-bool XmlKeyValuePair_TrySetPair( XmlKeyValuePair* pair, const char* const key, const char* const value )
+bool XmlKeyValuePair_TrySetPair( XmlKeyValuePair* const pair, const char* const key, const char* const value )
 {
     size_t keyLen = strlen( key );
 
@@ -53,7 +53,7 @@ bool XmlKeyValuePair_TrySetPair( XmlKeyValuePair* pair, const char* const key, c
  *
  * @return      true if the contents of value were assigned to pair.
  */
-bool XmlKeyValuePair_TrySetValue( XmlKeyValuePair* pair, const char* const value )
+bool XmlKeyValuePair_TrySetValue( XmlKeyValuePair* const pair, const char* const value )
 {
     size_t valueLen = strlen( value );
 
@@ -65,4 +65,40 @@ bool XmlKeyValuePair_TrySetValue( XmlKeyValuePair* pair, const char* const value
     strcpy( pair->Value, value );
 
     return true;
+}
+
+/**
+ * @brief       Check that the passed XmlKeyValuePair has a valid key.
+ *
+ * @param[in]   pair
+ *              The XmlKeyValuePair to check.
+ *
+ * @return      true if the key of the passed XmlKeyValuePair is valid.
+ */
+bool XmlKeyValuePair_IsKeyValid( const XmlKeyValuePair* const pair )
+{
+    size_t keyLen = strlen( pair->Key );
+
+    if ( 0 == keyLen )
+    {
+        return false;
+    }
+
+    return true;
+}
+
+/**
+ * @brief       Try to copy the contents of one XmlKeyValuePair to another.
+ *
+ * @param[out]  dest
+ *              Pointer to the destination XmlKeyValuePair.
+ *
+ * @param[in]   source
+ *              Pointer to the source XmlKeyValuePair.
+ *
+ * @return      true if the contents are copied.
+ */
+bool XmlKeyValuePair_TryCopy( XmlKeyValuePair* const dest, const XmlKeyValuePair* const source )
+{
+    return XmlKeyValuePair_TrySetPair( dest, source->Key, source->Value );
 }

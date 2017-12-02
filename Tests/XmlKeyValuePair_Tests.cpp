@@ -214,3 +214,45 @@ TEST( TrySetValue, Given_ValueWithLengthOverMax_When_TrySetValue_Then_ValueNotSe
     /* Then */
     STRCMP_EQUAL( "value", pair.Value );
 }
+
+TEST_GROUP( IsKeyValid )
+{
+};
+
+TEST( IsKeyValid, Given_KeyIsEmpty_When_CheckingIsKeyValid_Then_ReturnFalse )
+{
+    /* Given */
+    XmlKeyValuePair pair =
+    {
+        "", // Key
+        ""  // Value
+    };
+
+    /* When */
+    bool result = XmlKeyValuePair_IsKeyValid( &pair );
+
+    /* Then */
+    CHECK_EQUAL( false, result );
+}
+
+TEST_GROUP( TryCopy )
+{
+};
+
+TEST( TryCopy, Given_ValidSource_When_TryCopy_Then_ReturnTrue )
+{
+    /* Given */
+    XmlKeyValuePair sourcePair =
+    {
+        "key",
+        "value"
+    };
+
+    XmlKeyValuePair destinationPair;
+
+    /* When */
+    bool result = XmlKeyValuePair_TryCopy( &destinationPair, &sourcePair );
+
+    /* Then */
+    CHECK_EQUAL( true, result );
+}

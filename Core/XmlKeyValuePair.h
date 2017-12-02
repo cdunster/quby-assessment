@@ -16,5 +16,7 @@ typedef struct XmlKeyValuePair
     char Value[ MAX_VALUE_LEN + 1 ];
 } XmlKeyValuePair;
 
-bool XmlKeyValuePair_TrySetPair( XmlKeyValuePair* pair, const char* const key, const char* const value );
-bool XmlKeyValuePair_TrySetValue( XmlKeyValuePair* pair, const char* const value );
+bool XmlKeyValuePair_TrySetPair( XmlKeyValuePair* const pair, const char* const key, const char* const value );
+bool XmlKeyValuePair_TrySetValue( XmlKeyValuePair* const pair, const char* const value );
+bool XmlKeyValuePair_IsKeyValid( const XmlKeyValuePair* const pair );
+bool XmlKeyValuePair_TryCopy( XmlKeyValuePair* const dest, const XmlKeyValuePair* const source );

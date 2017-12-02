@@ -2,5 +2,5 @@
 
 uint8_t GetValue(void)
 {
-	return 1;
+	return 2;
 }

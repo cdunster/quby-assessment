@@ -68,7 +68,7 @@ CPPUTEST_WARNINGFLAGS += -Werror
 CPPUTEST_WARNINGFLAGS += -Wswitch-default
 CPPUTEST_WARNINGFLAGS += -Wfatal-errors
 CPPUTEST_CXXFLAGS = -Wno-c++14-compat
-CPPUTEST_CFLAGS = -std=c99
+CPPUTEST_CFLAGS = -std=c99 -ansi
 CPPUTEST_CXXFLAGS += $(CPPUTEST_PLATFORM_CXXFLAGS)
 CPPUTEST_CFLAGS += -Wno-missing-prototypes 
 CPPUTEST_CXXFLAGS += -Wno-missing-variable-declarations

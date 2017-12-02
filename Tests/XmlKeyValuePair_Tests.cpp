@@ -11,18 +11,11 @@ extern "C"
 #include "XmlKeyValuePair.h"
 }
 
-TEST_GROUP( XmlKeyValuePair )
+TEST_GROUP( TrySetPair )
 {
-    void setup( void )
-    {
-    }
-
-    void teardown( void )
-    {
-    }
 };
 
-TEST( XmlKeyValuePair, Given_EmptyKey_When_TrySettingPair_Then_ReturnFalse )
+TEST( TrySetPair, Given_EmptyKey_When_TrySettingPair_Then_ReturnFalse )
 {
     /* Given */
     XmlKeyValuePair pair;
@@ -36,7 +29,7 @@ TEST( XmlKeyValuePair, Given_EmptyKey_When_TrySettingPair_Then_ReturnFalse )
     CHECK_EQUAL( false, result );
 }
 
-TEST( XmlKeyValuePair, Given_EmptyValue_When_TrySettingPair_Then_ReturnFalse )
+TEST( TrySetPair, Given_EmptyValue_When_TrySettingPair_Then_ReturnTrue )
 {
     /* Given */
     XmlKeyValuePair pair;
@@ -47,10 +40,10 @@ TEST( XmlKeyValuePair, Given_EmptyValue_When_TrySettingPair_Then_ReturnFalse )
     bool result = XmlKeyValuePair_TrySetPair( &pair, key, value );
 
     /* Then */
-    CHECK_EQUAL( false, result );
+    CHECK_EQUAL( true, result );
 }
 
-TEST( XmlKeyValuePair, Given_NoneEmptyKeyAndValue_When_TrySettingPair_Then_ReturnTrue )
+TEST( TrySetPair, Given_NoneEmptyKeyAndValue_When_TrySettingPair_Then_ReturnTrue )
 {
     /* Given */
     XmlKeyValuePair pair;
@@ -64,7 +57,7 @@ TEST( XmlKeyValuePair, Given_NoneEmptyKeyAndValue_When_TrySettingPair_Then_Retur
     CHECK_EQUAL( true, result );
 }
 
-TEST( XmlKeyValuePair, Given_KeyWithLengthOverMax_When_TrySettingPair_Then_ReturnFalse )
+TEST( TrySetPair, Given_KeyWithLengthOverMax_When_TrySettingPair_Then_ReturnFalse )
 {
     /* Given */
     XmlKeyValuePair pair;
@@ -80,7 +73,7 @@ TEST( XmlKeyValuePair, Given_KeyWithLengthOverMax_When_TrySettingPair_Then_Retur
     CHECK_EQUAL( false, result );
 }
 
-TEST( XmlKeyValuePair, Given_ValueWithLengthOverMax_When_TrySettingPair_Then_ReturnFalse )
+TEST( TrySetPair, Given_ValueWithLengthOverMax_When_TrySettingPair_Then_ReturnFalse )
 {
     /* Given */
     XmlKeyValuePair pair;
@@ -96,7 +89,7 @@ TEST( XmlKeyValuePair, Given_ValueWithLengthOverMax_When_TrySettingPair_Then_Ret
     CHECK_EQUAL( false, result );
 }
 
-TEST( XmlKeyValuePair, Given_ValidKeyAndValue_When_TrySettingPair_Then_KeyIsSet )
+TEST( TrySetPair, Given_ValidKeyAndValue_When_TrySettingPair_Then_KeyIsSet )
 {
     /* Given */
     XmlKeyValuePair pair;
@@ -110,7 +103,7 @@ TEST( XmlKeyValuePair, Given_ValidKeyAndValue_When_TrySettingPair_Then_KeyIsSet 
     STRCMP_EQUAL( key, pair.Key );
 }
 
-TEST( XmlKeyValuePair, Given_ValidKeyAndValue_When_TrySettingPair_Then_ValueIsSet )
+TEST( TrySetPair, Given_ValidKeyAndValue_When_TrySettingPair_Then_ValueIsSet )
 {
     /* Given */
     XmlKeyValuePair pair;
@@ -122,4 +115,102 @@ TEST( XmlKeyValuePair, Given_ValidKeyAndValue_When_TrySettingPair_Then_ValueIsSe
 
     /* Then */
     STRCMP_EQUAL( value, pair.Value );
+}
+
+TEST_GROUP( TrySetValue )
+{
+};
+
+TEST( TrySetValue, Given_ValidValue_When_TrySetValue_Then_ReturnTrue )
+{
+    /* Given */
+    XmlKeyValuePair pair;
+    char value[] = "testValue";
+
+    /* When */
+    bool result = XmlKeyValuePair_TrySetValue( &pair, value );
+
+    /* Then */
+    CHECK_EQUAL( true, result );
+}
+
+TEST( TrySetValue, Given_EmptyValue_When_TrySetValue_Then_ReturnTrue )
+{
+    /* Given */
+    XmlKeyValuePair pair;
+    char value[] = "";
+
+    /* When */
+    bool result = XmlKeyValuePair_TrySetValue( &pair, value );
+
+    /* Then */
+    CHECK_EQUAL( true, result );
+}
+
+TEST( TrySetValue, Given_ValueWithLengthOverMax_When_TrySetValue_Then_ReturnFalse )
+{
+    /* Given */
+    XmlKeyValuePair pair;
+    char value[ MAX_VALUE_LEN + 2 ];
+
+    memset( value, '1', MAX_VALUE_LEN + 1 );
+
+    /* When */
+    bool result = XmlKeyValuePair_TrySetValue( &pair, value );
+
+    /* Then */
+    CHECK_EQUAL( false, result );
+}
+
+TEST( TrySetValue, Given_ValidValue_When_TrySetValue_Then_ValueIsSet )
+{
+    /* Given */
+    XmlKeyValuePair pair =
+    {
+        "Key",
+        "value"
+    };
+    char value[] = "testValue";
+
+    /* When */
+    XmlKeyValuePair_TrySetValue( &pair, value );
+
+    /* Then */
+    STRCMP_EQUAL( value, pair.Value );
+}
+
+TEST( TrySetValue, Given_EmptyValue_When_TrySetValue_Then_ValueIsSet )
+{
+    /* Given */
+    XmlKeyValuePair pair =
+    {
+        "Key",
+        "value"
+    };
+    char value[] = "";
+
+    /* When */
+    XmlKeyValuePair_TrySetValue( &pair, value );
+
+    /* Then */
+    STRCMP_EQUAL( value, pair.Value );
+}
+
+TEST( TrySetValue, Given_ValueWithLengthOverMax_When_TrySetValue_Then_ValueNotSet )
+{
+    /* Given */
+    XmlKeyValuePair pair =
+    {
+        "Key",
+        "value"
+    };
+    char value[ MAX_VALUE_LEN + 2 ];
+
+    memset( value, '1', MAX_VALUE_LEN + 1 );
+
+    /* When */
+    XmlKeyValuePair_TrySetValue( &pair, value );
+
+    /* Then */
+    STRCMP_EQUAL( "value", pair.Value );
 }

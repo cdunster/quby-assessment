@@ -17,3 +17,4 @@ typedef struct XmlKeyValuePair
 } XmlKeyValuePair;
 
 bool XmlKeyValuePair_TrySetPair( XmlKeyValuePair* pair, const char* const key, const char* const value );
+bool XmlKeyValuePair_TrySetValue( XmlKeyValuePair* pair, const char* const value );

@@ -26,19 +26,42 @@
 bool XmlKeyValuePair_TrySetPair( XmlKeyValuePair* pair, const char* const key, const char* const value )
 {
     size_t keyLen = strlen( key );
-    size_t valueLen = strlen( value );
 
     if ( 0 == keyLen || MAX_KEY_LEN < keyLen )
     {
         return false;
     }
 
-    if ( 0 == valueLen || MAX_VALUE_LEN < valueLen )
+    if ( false == XmlKeyValuePair_TrySetValue( pair, value ))
     {
         return false;
     }
 
     strcpy( pair->Key, key );
+
+    return true;
+}
+
+/**
+ * @brief       Try and assign the passed contents to the passed XmlKeyValuePair Value member.
+ *
+ * @param[in]   pair
+ *              Pointer to the XmlKeyValuePair to assign the contents to.
+ *
+ * @param[in]   value
+ *              The content to assign to the Value member of the passed XmlKeyValuePair.
+ *
+ * @return      true if the contents of value were assigned to pair.
+ */
+bool XmlKeyValuePair_TrySetValue( XmlKeyValuePair* pair, const char* const value )
+{
+    size_t valueLen = strlen( value );
+
+    if ( MAX_VALUE_LEN < valueLen )
+    {
+        return false;
+    }
+
     strcpy( pair->Value, value );
 
     return true;

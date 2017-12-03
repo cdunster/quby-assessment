@@ -12,11 +12,11 @@ extern "C"
 #include "XmlKeyValuePair.c"
 }
 
-TEST_GROUP( Create )
+TEST_GROUP( XmlKeyValuePair_Create )
 {
 };
 
-TEST( Create, When_CreatingXmlKeyValuePair_Then_ReturnNoneNullPointer )
+TEST( XmlKeyValuePair_Create, When_CreatingXmlKeyValuePair_Then_ReturnNoneNullPointer )
 {
     /* When */
     XmlKeyValuePair* pair = XmlKeyValuePair_Create();
@@ -26,7 +26,7 @@ TEST( Create, When_CreatingXmlKeyValuePair_Then_ReturnNoneNullPointer )
     XmlKeyValuePair_Destroy( pair );
 }
 
-TEST_GROUP( TrySetPair )
+TEST_GROUP( XmlKeyValuePair_TrySetPair )
 {
     XmlKeyValuePair* pair;
 
@@ -41,7 +41,7 @@ TEST_GROUP( TrySetPair )
     }
 };
 
-TEST( TrySetPair, Given_EmptyKey_When_TrySettingPair_Then_ReturnFalse )
+TEST( XmlKeyValuePair_TrySetPair, Given_EmptyKey_When_TrySettingPair_Then_ReturnFalse )
 {
     /* Given */
     char key[] = "";
@@ -54,7 +54,7 @@ TEST( TrySetPair, Given_EmptyKey_When_TrySettingPair_Then_ReturnFalse )
     CHECK_EQUAL( false, result );
 }
 
-TEST( TrySetPair, Given_EmptyValue_When_TrySettingPair_Then_ReturnTrue )
+TEST( XmlKeyValuePair_TrySetPair, Given_EmptyValue_When_TrySettingPair_Then_ReturnTrue )
 {
     /* Given */
     char key[] = "testKey";
@@ -67,7 +67,7 @@ TEST( TrySetPair, Given_EmptyValue_When_TrySettingPair_Then_ReturnTrue )
     CHECK_EQUAL( true, result );
 }
 
-TEST( TrySetPair, Given_NoneEmptyKeyAndValue_When_TrySettingPair_Then_ReturnTrue )
+TEST( XmlKeyValuePair_TrySetPair, Given_NoneEmptyKeyAndValue_When_TrySettingPair_Then_ReturnTrue )
 {
     /* Given */
     char key[] = "testKey";
@@ -80,7 +80,7 @@ TEST( TrySetPair, Given_NoneEmptyKeyAndValue_When_TrySettingPair_Then_ReturnTrue
     CHECK_EQUAL( true, result );
 }
 
-TEST( TrySetPair, Given_KeyWithLengthOverMax_When_TrySettingPair_Then_ReturnFalse )
+TEST( XmlKeyValuePair_TrySetPair, Given_KeyWithLengthOverMax_When_TrySettingPair_Then_ReturnFalse )
 {
     /* Given */
     char key[ MAX_KEY_LEN + 2 ];
@@ -95,7 +95,7 @@ TEST( TrySetPair, Given_KeyWithLengthOverMax_When_TrySettingPair_Then_ReturnFals
     CHECK_EQUAL( false, result );
 }
 
-TEST( TrySetPair, Given_ValueWithLengthOverMax_When_TrySettingPair_Then_ReturnFalse )
+TEST( XmlKeyValuePair_TrySetPair, Given_ValueWithLengthOverMax_When_TrySettingPair_Then_ReturnFalse )
 {
     /* Given */
     char key[] = "testKey";
@@ -110,7 +110,7 @@ TEST( TrySetPair, Given_ValueWithLengthOverMax_When_TrySettingPair_Then_ReturnFa
     CHECK_EQUAL( false, result );
 }
 
-TEST( TrySetPair, Given_ValidKeyAndValue_When_TrySettingPair_Then_KeyIsSet )
+TEST( XmlKeyValuePair_TrySetPair, Given_ValidKeyAndValue_When_TrySettingPair_Then_KeyIsSet )
 {
     /* Given */
     char key[] = "testKey";
@@ -123,7 +123,7 @@ TEST( TrySetPair, Given_ValidKeyAndValue_When_TrySettingPair_Then_KeyIsSet )
     STRCMP_EQUAL( key, pair->Key );
 }
 
-TEST( TrySetPair, Given_ValidKeyAndValue_When_TrySettingPair_Then_ValueIsSet )
+TEST( XmlKeyValuePair_TrySetPair, Given_ValidKeyAndValue_When_TrySettingPair_Then_ValueIsSet )
 {
     /* Given */
     char key[] = "testKey";
@@ -136,7 +136,7 @@ TEST( TrySetPair, Given_ValidKeyAndValue_When_TrySettingPair_Then_ValueIsSet )
     STRCMP_EQUAL( value, pair->Value );
 }
 
-TEST_GROUP( IsKeyValid )
+TEST_GROUP( XmlKeyValuePair_IsKeyValid )
 {
     XmlKeyValuePair* pair;
 
@@ -151,7 +151,7 @@ TEST_GROUP( IsKeyValid )
     }
 };
 
-TEST( IsKeyValid, Given_EmptyKey_When_CheckingIsKeyValid_Then_ReturnFalse )
+TEST( XmlKeyValuePair_IsKeyValid, Given_EmptyKey_When_CheckingIsKeyValid_Then_ReturnFalse )
 {
     /* Given */
     strcpy( pair->Key, "" );
@@ -163,7 +163,7 @@ TEST( IsKeyValid, Given_EmptyKey_When_CheckingIsKeyValid_Then_ReturnFalse )
     CHECK_EQUAL( false, result );
 }
 
-TEST( IsKeyValid, Given_ValidKey_When_CheckingIsKeyValid_Then_ReturnTrue )
+TEST( XmlKeyValuePair_IsKeyValid, Given_ValidKey_When_CheckingIsKeyValid_Then_ReturnTrue )
 {
     /* Given */
     strcpy( pair->Key, "key123" );
@@ -175,7 +175,7 @@ TEST( IsKeyValid, Given_ValidKey_When_CheckingIsKeyValid_Then_ReturnTrue )
     CHECK_EQUAL( true, result );
 }
 
-TEST_GROUP( TrySetValue )
+TEST_GROUP( XmlKeyValuePair_TrySetValue )
 {
     XmlKeyValuePair* pair;
 
@@ -190,7 +190,7 @@ TEST_GROUP( TrySetValue )
     }
 };
 
-TEST( TrySetValue, Given_ValidValue_When_TrySetValue_Then_ReturnTrue )
+TEST( XmlKeyValuePair_TrySetValue, Given_ValidValue_When_TrySetValue_Then_ReturnTrue )
 {
     /* Given */
     char value[] = "testValue";
@@ -202,7 +202,7 @@ TEST( TrySetValue, Given_ValidValue_When_TrySetValue_Then_ReturnTrue )
     CHECK_EQUAL( true, result );
 }
 
-TEST( TrySetValue, Given_EmptyValue_When_TrySetValue_Then_ReturnTrue )
+TEST( XmlKeyValuePair_TrySetValue, Given_EmptyValue_When_TrySetValue_Then_ReturnTrue )
 {
     /* Given */
     char value[] = "";
@@ -214,7 +214,7 @@ TEST( TrySetValue, Given_EmptyValue_When_TrySetValue_Then_ReturnTrue )
     CHECK_EQUAL( true, result );
 }
 
-TEST( TrySetValue, Given_ValueWithLengthOverMax_When_TrySetValue_Then_ReturnFalse )
+TEST( XmlKeyValuePair_TrySetValue, Given_ValueWithLengthOverMax_When_TrySetValue_Then_ReturnFalse )
 {
     /* Given */
 
@@ -229,7 +229,7 @@ TEST( TrySetValue, Given_ValueWithLengthOverMax_When_TrySetValue_Then_ReturnFals
     CHECK_EQUAL( false, result );
 }
 
-TEST( TrySetValue, Given_ValidValue_When_TrySetValue_Then_ValueIsSet )
+TEST( XmlKeyValuePair_TrySetValue, Given_ValidValue_When_TrySetValue_Then_ValueIsSet )
 {
     /* Given */
     strcpy( pair->Value, "value" );
@@ -242,7 +242,7 @@ TEST( TrySetValue, Given_ValidValue_When_TrySetValue_Then_ValueIsSet )
     STRCMP_EQUAL( value, pair->Value );
 }
 
-TEST( TrySetValue, Given_EmptyValue_When_TrySetValue_Then_ValueIsSet )
+TEST( XmlKeyValuePair_TrySetValue, Given_EmptyValue_When_TrySetValue_Then_ValueIsSet )
 {
     /* Given */
     strcpy( pair->Value, "value" );
@@ -255,7 +255,7 @@ TEST( TrySetValue, Given_EmptyValue_When_TrySetValue_Then_ValueIsSet )
     STRCMP_EQUAL( value, pair->Value );
 }
 
-TEST( TrySetValue, Given_ValueWithLengthOverMax_When_TrySetValue_Then_ValueNotSet )
+TEST( XmlKeyValuePair_TrySetValue, Given_ValueWithLengthOverMax_When_TrySetValue_Then_ValueNotSet )
 {
     /* Given */
     strcpy( pair->Value, "value" );
@@ -270,7 +270,7 @@ TEST( TrySetValue, Given_ValueWithLengthOverMax_When_TrySetValue_Then_ValueNotSe
     STRCMP_EQUAL( "value", pair->Value );
 }
 
-TEST_GROUP( TryCopy )
+TEST_GROUP( XmlKeyValuePair_TryCopy )
 {
     XmlKeyValuePair* sourcePair;
 
@@ -285,7 +285,7 @@ TEST_GROUP( TryCopy )
     }
 };
 
-TEST( TryCopy, Given_ValidSource_When_TryCopy_Then_ReturnTrue )
+TEST( XmlKeyValuePair_TryCopy, Given_ValidSource_When_TryCopy_Then_ReturnTrue )
 {
     XmlKeyValuePair* destinationPair = XmlKeyValuePair_Create();
 

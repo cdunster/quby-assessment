@@ -12,11 +12,11 @@ extern "C"
 #include "XmlDataStore.c"
 }
 
-TEST_GROUP( Init )
+TEST_GROUP( XmlDataStore_Init )
 {
 };
 
-TEST( Init, Given_NumberOfKeysNotZero_When_Initialised_Then_NumberOfKeysIsZero )
+TEST( XmlDataStore_Init, Given_NumberOfKeysNotZero_When_Initialised_Then_NumberOfKeysIsZero )
 {
     /* Given */
     NumberOfKeys = 3;
@@ -30,11 +30,11 @@ TEST( Init, Given_NumberOfKeysNotZero_When_Initialised_Then_NumberOfKeysIsZero )
     XmlDataStore_DeInit();
 }
 
-TEST_GROUP( GetNumberOfKeys )
+TEST_GROUP( XmlDataStore_GetNumberOfKeys )
 {
 };
 
-TEST( GetNumberOfKeys, When_GettingNumberOfKeys_Then_ReturnNumberOfKeys )
+TEST( XmlDataStore_GetNumberOfKeys, When_GettingNumberOfKeys_Then_ReturnNumberOfKeys )
 {
     NumberOfKeys = 5;
 
@@ -45,7 +45,7 @@ TEST( GetNumberOfKeys, When_GettingNumberOfKeys_Then_ReturnNumberOfKeys )
     CHECK_EQUAL( 5, result );
 }
 
-TEST_GROUP( TryAdd )
+TEST_GROUP( XmlDataStore_TryAdd )
 {
     XmlKeyValuePair* pair;
 
@@ -62,7 +62,7 @@ TEST_GROUP( TryAdd )
     }
 };
 
-TEST( TryAdd, Given_NumberOfKeysIsZero_When_TryAddingNewData_Then_NumberOfKeysIncremented )
+TEST( XmlDataStore_TryAdd, Given_NumberOfKeysIsZero_When_TryAddingNewData_Then_NumberOfKeysIncremented )
 {
     /* Given */
     XmlKeyValuePair_TrySetPair( pair, "key", "42" );
@@ -75,7 +75,7 @@ TEST( TryAdd, Given_NumberOfKeysIsZero_When_TryAddingNewData_Then_NumberOfKeysIn
     CHECK_EQUAL( 1, NumberOfKeys );
 }
 
-TEST( TryAdd, Given_NumberOfKeysIsMax_When_TryAddingNewData_Then_NumberOfKeysIsNotChanged )
+TEST( XmlDataStore_TryAdd, Given_NumberOfKeysIsMax_When_TryAddingNewData_Then_NumberOfKeysIsNotChanged )
 {
     NumberOfKeys = MAX_NUM_KEYS;
 
@@ -89,7 +89,7 @@ TEST( TryAdd, Given_NumberOfKeysIsMax_When_TryAddingNewData_Then_NumberOfKeysIsN
     CHECK_EQUAL( MAX_NUM_KEYS, NumberOfKeys );
 }
 
-TEST( TryAdd, Given_ValidPairAndNumberOfKeysBelowMax_When_TryAddingNewData_Then_ReturnTrue )
+TEST( XmlDataStore_TryAdd, Given_ValidPairAndNumberOfKeysBelowMax_When_TryAddingNewData_Then_ReturnTrue )
 {
     /* Given */
     XmlKeyValuePair_TrySetPair( pair, "key", "42" );
@@ -102,7 +102,7 @@ TEST( TryAdd, Given_ValidPairAndNumberOfKeysBelowMax_When_TryAddingNewData_Then_
     CHECK_EQUAL( true, result );
 }
 
-TEST( TryAdd, Given_ValidPairButNumberOfKeysIsMax_When_TryAddingNewData_Then_ReturnFalse )
+TEST( XmlDataStore_TryAdd, Given_ValidPairButNumberOfKeysIsMax_When_TryAddingNewData_Then_ReturnFalse )
 {
     /* Given */
     XmlKeyValuePair_TrySetPair( pair, "key", "42" );
@@ -115,7 +115,7 @@ TEST( TryAdd, Given_ValidPairButNumberOfKeysIsMax_When_TryAddingNewData_Then_Ret
     CHECK_EQUAL( false, result );
 }
 
-TEST( TryAdd, Given_PairKeyIsEmpty_When_TryAddingNewData_Then_ReturnFalse )
+TEST( XmlDataStore_TryAdd, Given_PairKeyIsEmpty_When_TryAddingNewData_Then_ReturnFalse )
 {
     /* Given */
     XmlKeyValuePair* newPair = XmlKeyValuePair_Create();    // Create new pair to force empty Key.
@@ -129,7 +129,7 @@ TEST( TryAdd, Given_PairKeyIsEmpty_When_TryAddingNewData_Then_ReturnFalse )
     XmlKeyValuePair_Destroy( newPair );
 }
 
-TEST( TryAdd, Given_PairKeyIsEmpty_When_TryAddingNewData_Then_DontStorePair )
+TEST( XmlDataStore_TryAdd, Given_PairKeyIsEmpty_When_TryAddingNewData_Then_DontStorePair )
 {
     XmlKeyValuePair_TrySetPair( DataStore[0], "a", "b" );
 
@@ -144,7 +144,7 @@ TEST( TryAdd, Given_PairKeyIsEmpty_When_TryAddingNewData_Then_DontStorePair )
     STRCMP_EQUAL( "b", XmlKeyValuePair_GetValue( DataStore[ 0 ] ) );
 }
 
-TEST( TryAdd, Given_ValidPair_When_TryAddingNewData_Then_StorePair )
+TEST( XmlDataStore_TryAdd, Given_ValidPair_When_TryAddingNewData_Then_StorePair )
 {
     /* Given */
     XmlKeyValuePair_TrySetPair( pair, "helloKey", "newValue" );
@@ -157,7 +157,7 @@ TEST( TryAdd, Given_ValidPair_When_TryAddingNewData_Then_StorePair )
     STRCMP_EQUAL( "newValue", XmlKeyValuePair_GetValue( DataStore[ 0 ] ) );
 }
 
-TEST( TryAdd, Given_ValidPairWithEmptyValue_When_TryAddingNewData_Then_StorePair )
+TEST( XmlDataStore_TryAdd, Given_ValidPairWithEmptyValue_When_TryAddingNewData_Then_StorePair )
 {
     /* Given */
     XmlKeyValuePair_TrySetPair( pair, "helloKey", "" );
@@ -170,7 +170,7 @@ TEST( TryAdd, Given_ValidPairWithEmptyValue_When_TryAddingNewData_Then_StorePair
     STRCMP_EQUAL( "", XmlKeyValuePair_GetValue( DataStore[ 0 ] ) );
 }
 
-TEST( TryAdd, Given_DataStoreNotEmpty_When_TryAddingNewDataPair_Then_NumberOfKeysIncremented )
+TEST( XmlDataStore_TryAdd, Given_DataStoreNotEmpty_When_TryAddingNewDataPair_Then_NumberOfKeysIncremented )
 {
     /* Given */
     XmlKeyValuePair_TrySetPair( pair, "Key1", "Value1" );
@@ -187,7 +187,7 @@ TEST( TryAdd, Given_DataStoreNotEmpty_When_TryAddingNewDataPair_Then_NumberOfKey
     XmlKeyValuePair_Destroy( pair2 );
 }
 
-TEST( TryAdd, Given_TwoValidPairs_When_TryAddingTwoNewDataPairs_Then_StorePairs )
+TEST( XmlDataStore_TryAdd, Given_TwoValidPairs_When_TryAddingTwoNewDataPairs_Then_StorePairs )
 {
     /* Given */
     XmlKeyValuePair_TrySetPair( pair, "Key1", "Value1" );
@@ -208,7 +208,7 @@ TEST( TryAdd, Given_TwoValidPairs_When_TryAddingTwoNewDataPairs_Then_StorePairs 
     XmlKeyValuePair_Destroy( pair2 );
 }
 
-TEST_GROUP( GetIndexOfKey )
+TEST_GROUP( XmlDataStore_GetIndexOfKey )
 {
     XmlKeyValuePair* pair;
 
@@ -225,7 +225,7 @@ TEST_GROUP( GetIndexOfKey )
     }
 };
 
-TEST( GetIndexOfKey, Given_KeyInDataStore_When_GettingIndexOfKey_Then_ReturnIndex )
+TEST( XmlDataStore_GetIndexOfKey, Given_KeyInDataStore_When_GettingIndexOfKey_Then_ReturnIndex )
 {
     /* Given */
     XmlKeyValuePair_TrySetPair( pair, "helloKey", "newValue" );
@@ -238,7 +238,7 @@ TEST( GetIndexOfKey, Given_KeyInDataStore_When_GettingIndexOfKey_Then_ReturnInde
     CHECK_EQUAL( 0, index );
 }
 
-TEST( GetIndexOfKey, Given_KeyNotInDataStore_When_GettingIndexOfKey_Then_ReturnKeyNotFound )
+TEST( XmlDataStore_GetIndexOfKey, Given_KeyNotInDataStore_When_GettingIndexOfKey_Then_ReturnKeyNotFound )
 {
     /* Given */
 
@@ -249,7 +249,7 @@ TEST( GetIndexOfKey, Given_KeyNotInDataStore_When_GettingIndexOfKey_Then_ReturnK
     CHECK_EQUAL( KEY_NOT_FOUND, index );
 }
 
-TEST( GetIndexOfKey, Given_KeyAtIndexThreeInDataStore_When_GettingIndexOfKey_Then_ReturnThree )
+TEST( XmlDataStore_GetIndexOfKey, Given_KeyAtIndexThreeInDataStore_When_GettingIndexOfKey_Then_ReturnThree )
 {
     /* Given */
     XmlKeyValuePair_TrySetPair( pair, "key1", "value1" );
@@ -271,7 +271,7 @@ TEST( GetIndexOfKey, Given_KeyAtIndexThreeInDataStore_When_GettingIndexOfKey_The
     CHECK_EQUAL( 3, index );
 }
 
-TEST_GROUP( TryGetValueOfKey )
+TEST_GROUP( XmlDataStore_TryGetValueOfKey )
 {
     XmlKeyValuePair* pair;
 
@@ -288,7 +288,7 @@ TEST_GROUP( TryGetValueOfKey )
     }
 };
 
-TEST( TryGetValueOfKey, Given_KeyInDataStore_When_TryingToGetValueOfKey_Then_ReturnTrue )
+TEST( XmlDataStore_TryGetValueOfKey, Given_KeyInDataStore_When_TryingToGetValueOfKey_Then_ReturnTrue )
 {
     /* Given */
     XmlKeyValuePair_TrySetPair( pair, "key1", "value1" );
@@ -302,7 +302,7 @@ TEST( TryGetValueOfKey, Given_KeyInDataStore_When_TryingToGetValueOfKey_Then_Ret
     CHECK_EQUAL( true, result );
 }
 
-TEST( TryGetValueOfKey, Given_KeyNotInDataStore_When_TryingToGetValueOfKey_Then_ReturnFalse )
+TEST( XmlDataStore_TryGetValueOfKey, Given_KeyNotInDataStore_When_TryingToGetValueOfKey_Then_ReturnFalse )
 {
     /* Given */
     XmlKeyValuePair_TrySetPair( pair, "exampleKey", "value1" );
@@ -316,7 +316,7 @@ TEST( TryGetValueOfKey, Given_KeyNotInDataStore_When_TryingToGetValueOfKey_Then_
     CHECK_EQUAL( false, result );
 }
 
-TEST( TryGetValueOfKey, Given_KeyInDataStore_When_TryingToGetValueOfKey_Then_GetValue )
+TEST( XmlDataStore_TryGetValueOfKey, Given_KeyInDataStore_When_TryingToGetValueOfKey_Then_GetValue )
 {
     /* Given */
     XmlKeyValuePair_TrySetPair( pair, "keyA", "42" );
@@ -330,7 +330,7 @@ TEST( TryGetValueOfKey, Given_KeyInDataStore_When_TryingToGetValueOfKey_Then_Get
     STRCMP_EQUAL( "42", value );
 }
 
-TEST( TryGetValueOfKey, Given_KeyInDataStoreWithMultipleKeys_When_TryingToGetValueOfKey_Then_GetCorrectValue )
+TEST( XmlDataStore_TryGetValueOfKey, Given_KeyInDataStoreWithMultipleKeys_When_TryingToGetValueOfKey_Then_GetCorrectValue )
 {
     /* Given */
     XmlKeyValuePair_TrySetPair( pair, "keyA", "42" );

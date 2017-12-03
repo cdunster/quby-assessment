@@ -5,7 +5,7 @@ SILENCE = @
 COMPONENT_NAME = UnitTest/QubyAssessment
 
 #--- Inputs ----#
-PROJECT_HOME_DIR = ./UnitTest/
+#PROJECT_HOME_DIR = ./
 ifeq "$(CPPUTEST_HOME)" ""
     CPPUTEST_HOME = /opt/cpputest
 endif
@@ -21,7 +21,7 @@ endif
 # These files are compiled and put into a the
 # ProductionCode library and links with the test runner
 SRC_DIRS =\
-  ./Core
+  ./Source/Core
 
 # --- TEST_SRC_FILES ---
 # TEST_SRC_FILES specifies individual test files to build.  Test
@@ -32,7 +32,7 @@ SRC_DIRS =\
 # --- TEST_SRC_DIRS ---
 # Like TEST_SRC_FILES, but biulds everyting in the directory
 TEST_SRC_DIRS =\
-  ./Tests
+  ./Source/Tests
 
 # --- MOCKS_SRC_DIRS ---
 # MOCKS_SRC_DIRS specifies a directories where you can put your
@@ -47,7 +47,7 @@ INCLUDE_DIRS =\
   .\
   $(CPPUTEST_HOME)/include/ \
   $(CPPUTEST_HOME)/include/Platforms/Gcc \
-  ./Core
+  ./Source/Core
 
 
 # --- CPPUTEST_OBJS_DIR ---

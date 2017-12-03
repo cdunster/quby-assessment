@@ -7,6 +7,7 @@
  */
 
 #include "XmlKeyValuePair.h"
+#include <stdlib.h>
 #include <string.h>
 
 #define MAX_KEY_LEN     64

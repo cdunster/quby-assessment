@@ -27,12 +27,12 @@
 		<link>
 			<name>Core</name>
 			<type>2</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Core</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/Source/Core</locationURI>
 		</link>
 		<link>
 			<name>Tests</name>
 			<type>2</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Tests</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/Source/Tests</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>

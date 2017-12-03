@@ -9,6 +9,37 @@
 #include "XmlKeyValuePair.h"
 #include <string.h>
 
+#define MAX_KEY_LEN     64
+#define MAX_VALUE_LEN   64
+
+struct XmlKeyValuePair
+{
+    char Key[ MAX_KEY_LEN + 1 ];
+    char Value[ MAX_VALUE_LEN + 1 ];
+};
+
+/**
+ * @brief       Create a new XmlKeyValuePair by allocating memory and return the pointer to it.
+ * @return      Pointer to the new XmlKeyValuePair.
+ */
+XmlKeyValuePair* XmlKeyValuePair_Create( void )
+{
+    XmlKeyValuePair* pair = (XmlKeyValuePair*) malloc( sizeof(XmlKeyValuePair) );
+
+    return pair;
+}
+
+/**
+ * @brief       Destroy the passed XmlKeyValuePair and free the allocated memory.
+ *
+ * @param[in]   pair
+ *              The XmlKeyValuePair to destroy.
+ */
+void XmlKeyValuePair_Destroy( const XmlKeyValuePair* const pair )
+{
+    free( (XmlKeyValuePair*) pair );
+}
+
 /**
  * @brief       Try and assign the passed contents to the passed XmlKeyValuePair.
  *
@@ -27,17 +58,37 @@ bool XmlKeyValuePair_TrySetPair( XmlKeyValuePair* const pair, const char* const 
 {
     size_t keyLen = strlen( key );
 
-    if ( 0 == keyLen || MAX_KEY_LEN < keyLen )
+    if ( 0 >= keyLen || MAX_KEY_LEN < keyLen )
     {
         return false;
     }
 
-    if ( false == XmlKeyValuePair_TrySetValue( pair, value ))
+    if ( false == XmlKeyValuePair_TrySetValue( pair, value ) )
     {
         return false;
     }
 
     strcpy( pair->Key, key );
+
+    return true;
+}
+
+/**
+ * @brief       Check if the passed XmlKeyValuePair has a valid Key.
+ *
+ * @param[in]   pair
+ *              Pointer to the XmlKeyValuePair to check.
+ *
+ * @return      true if the Key is valid.
+ */
+bool XmlKeyValuePair_IsKeyValid( const XmlKeyValuePair* const pair )
+{
+    size_t keyLen = strlen( pair->Key );
+
+    if ( 0 >= keyLen || MAX_KEY_LEN < keyLen )
+    {
+        return false;
+    }
 
     return true;
 }
@@ -68,26 +119,6 @@ bool XmlKeyValuePair_TrySetValue( XmlKeyValuePair* const pair, const char* const
 }
 
 /**
- * @brief       Check that the passed XmlKeyValuePair has a valid key.
- *
- * @param[in]   pair
- *              The XmlKeyValuePair to check.
- *
- * @return      true if the key of the passed XmlKeyValuePair is valid.
- */
-bool XmlKeyValuePair_IsKeyValid( const XmlKeyValuePair* const pair )
-{
-    size_t keyLen = strlen( pair->Key );
-
-    if ( 0 == keyLen )
-    {
-        return false;
-    }
-
-    return true;
-}
-
-/**
  * @brief       Try to copy the contents of one XmlKeyValuePair to another.
  *
  * @param[out]  dest
@@ -101,4 +132,30 @@ bool XmlKeyValuePair_IsKeyValid( const XmlKeyValuePair* const pair )
 bool XmlKeyValuePair_TryCopy( XmlKeyValuePair* const dest, const XmlKeyValuePair* const source )
 {
     return XmlKeyValuePair_TrySetPair( dest, source->Key, source->Value );
+}
+
+/**
+ * @brief       Get the content of the Key member of the passed XmlKeyValuePair.
+ *
+ * @param[in]   pair
+ *              The XmlKeyValuePair to get the Key of.
+ *
+ * @return      Pointer to the content of the Key member.
+ */
+const char* const XmlKeyValuePair_GetKey( const XmlKeyValuePair* const pair )
+{
+    return pair->Key;
+}
+
+/**
+ * @brief       Get the content of the Value member of the passed XmlKeyValuePair.
+ *
+ * @param[in]   pair
+ *              The XmlKeyValuePair to get the Value of.
+ *
+ * @return      Pointer to the content of the Value member.
+ */
+const char* const XmlKeyValuePair_GetValue( const XmlKeyValuePair* const pair )
+{
+    return pair->Value;
 }

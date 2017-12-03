@@ -29,13 +29,25 @@ TEST( GetNumberOfKeys, When_GettingNumberOfKeys_Then_ReturnNumberOfKeys )
 
 TEST_GROUP( TryAdd )
 {
+    XmlKeyValuePair* pair;
+
+    void setup( void )
+    {
+        pair = XmlKeyValuePair_Create();
+        XmlDataStore_Init();
+    }
+
+    void teardown( void )
+    {
+        XmlKeyValuePair_Destroy( pair );
+        XmlDataStore_DeInit();
+    }
 };
 
 TEST( TryAdd, Given_NumberOfKeysIsZero_When_TryAddingNewData_Then_NumberOfKeysIncremented )
 {
-    XmlKeyValuePair pair;
-
     /* Given */
+    XmlKeyValuePair_TrySetPair( pair, "key", "42" );
     NumberOfKeys = 0;
 
     /* When */
@@ -50,7 +62,7 @@ TEST( TryAdd, Given_NumberOfKeysIsMax_When_TryAddingNewData_Then_NumberOfKeysIsN
     NumberOfKeys = MAX_NUM_KEYS;
 
     /* Given */
-    XmlKeyValuePair pair;
+    XmlKeyValuePair_TrySetPair( pair, "key", "42" );
 
     /* When */
     XmlDataStore_TryAdd( pair );
@@ -62,10 +74,7 @@ TEST( TryAdd, Given_NumberOfKeysIsMax_When_TryAddingNewData_Then_NumberOfKeysIsN
 TEST( TryAdd, Given_ValidPairAndNumberOfKeysBelowMax_When_TryAddingNewData_Then_ReturnTrue )
 {
     /* Given */
-    XmlKeyValuePair pair =
-    {
-        "key"
-    };
+    XmlKeyValuePair_TrySetPair( pair, "key", "42" );
     NumberOfKeys = 0;
 
     /* When */
@@ -78,7 +87,7 @@ TEST( TryAdd, Given_ValidPairAndNumberOfKeysBelowMax_When_TryAddingNewData_Then_
 TEST( TryAdd, Given_ValidPairButNumberOfKeysIsMax_When_TryAddingNewData_Then_ReturnFalse )
 {
     /* Given */
-    XmlKeyValuePair pair;
+    XmlKeyValuePair_TrySetPair( pair, "key", "42" );
     NumberOfKeys = MAX_NUM_KEYS;
 
     /* When */
@@ -91,52 +100,43 @@ TEST( TryAdd, Given_ValidPairButNumberOfKeysIsMax_When_TryAddingNewData_Then_Ret
 TEST( TryAdd, Given_PairKeyIsEmpty_When_TryAddingNewData_Then_ReturnFalse )
 {
     /* Given */
-    XmlKeyValuePair pair =
-    {
-        "", // Key
-        ""  // Value
-    };
+    XmlKeyValuePair* newPair = XmlKeyValuePair_Create();    // Create new pair to force empty Key.
 
     /* When */
-    bool result = XmlDataStore_TryAdd( pair );
+    bool result = XmlDataStore_TryAdd( newPair );
 
     /* Then */
     CHECK_EQUAL( false, result );
+
+    XmlKeyValuePair_Destroy( newPair );
 }
 
 TEST( TryAdd, Given_PairKeyIsEmpty_When_TryAddingNewData_Then_DontStorePair )
 {
-    strcpy( DataStore[ 0 ].Key, "helloKey" );
-    strcpy( DataStore[ 0 ].Value, "42" );
+    XmlKeyValuePair_TrySetPair( DataStore[ 0 ], "helloKey", "42" );
 
     /* Given */
-    XmlKeyValuePair pair =
-    {
-        "", // Key
-        ""  // Value
-    };
+    XmlKeyValuePair_TrySetPair( pair, "", "newValue" );
 
     /* When */
     XmlDataStore_TryAdd( pair );
 
     /* Then */
-    STRCMP_EQUAL( "helloKey", DataStore[ 0 ].Key );
-    STRCMP_EQUAL( "42", DataStore[ 0 ].Value );
+    STRCMP_EQUAL( "helloKey", XmlKeyValuePair_GetKey( DataStore[ 0 ] ) );
+    STRCMP_EQUAL( "42", XmlKeyValuePair_GetValue( DataStore[ 0 ] ) );
 }
 
 TEST( TryAdd, Given_ValidPair_When_TryAddingNewData_Then_StorePair )
 {
+    XmlKeyValuePair_TrySetPair( DataStore[ 0 ], "key", "42" );
+
     /* Given */
-    XmlKeyValuePair pair =
-    {
-        "helloKey",
-        "42"
-    };
+    XmlKeyValuePair_TrySetPair( pair, "helloKey", "newValue" );
 
     /* When */
     XmlDataStore_TryAdd( pair );
 
     /* Then */
-    STRCMP_EQUAL( "helloKey", DataStore[ 0 ].Key );
-    STRCMP_EQUAL( "42", DataStore[ 0 ].Value );
+    STRCMP_EQUAL( "helloKey", XmlKeyValuePair_GetKey( DataStore[ 0 ] ) );
+    STRCMP_EQUAL( "newValue", XmlKeyValuePair_GetValue( DataStore[ 0 ] ) );
 }

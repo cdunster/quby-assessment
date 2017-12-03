@@ -62,6 +62,11 @@ uint16_t XmlDataStore_GetNumberOfKeys( void )
  */
 bool XmlDataStore_TryAdd( XmlKeyValuePair* pair )
 {
+    if ( NULL == pair )
+    {
+        return false;
+    }
+
     if ( MAX_NUM_KEYS <= NumberOfKeys )
     {
         return false;
@@ -92,6 +97,11 @@ bool XmlDataStore_TryAdd( XmlKeyValuePair* pair )
  */
 int32_t XmlDataStore_GetIndexOfKey( const char* const key )
 {
+    if ( NULL == key || 0 == strlen( key ) )
+    {
+        return KEY_NOT_FOUND;
+    }
+
     uint16_t i;
     for ( i = 0; i < NumberOfKeys; i++ )
     {
@@ -117,6 +127,11 @@ int32_t XmlDataStore_GetIndexOfKey( const char* const key )
  */
 bool XmlDataStore_TryGetValueOfKey( const char* const key, const char** const value )
 {
+    if ( NULL == key || NULL == value )
+    {
+        return false;
+    }
+
     int32_t indexOfKey = XmlDataStore_GetIndexOfKey( key );
     if ( KEY_NOT_FOUND == indexOfKey )
     {

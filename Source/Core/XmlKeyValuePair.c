@@ -40,6 +40,11 @@ XmlKeyValuePair* XmlKeyValuePair_Create( void )
  */
 void XmlKeyValuePair_Destroy( const XmlKeyValuePair* const pair )
 {
+    if ( NULL == pair )
+    {
+        return;
+    }
+
     free( (XmlKeyValuePair*) pair );
 }
 
@@ -59,6 +64,11 @@ void XmlKeyValuePair_Destroy( const XmlKeyValuePair* const pair )
  */
 bool XmlKeyValuePair_TrySetPair( XmlKeyValuePair* const pair, const char* const key, const char* const value )
 {
+    if ( NULL == pair || NULL == key || NULL == value )
+    {
+        return false;
+    }
+
     size_t keyLen = strlen( key );
 
     if ( 0 >= keyLen || MAX_KEY_LEN < keyLen )
@@ -86,6 +96,11 @@ bool XmlKeyValuePair_TrySetPair( XmlKeyValuePair* const pair, const char* const 
  */
 bool XmlKeyValuePair_IsKeyValid( const XmlKeyValuePair* const pair )
 {
+    if ( NULL == pair )
+    {
+        return false;
+    }
+
     size_t keyLen = strlen( pair->Key );
 
     if ( 0 >= keyLen || MAX_KEY_LEN < keyLen )
@@ -109,6 +124,11 @@ bool XmlKeyValuePair_IsKeyValid( const XmlKeyValuePair* const pair )
  */
 bool XmlKeyValuePair_TrySetValue( XmlKeyValuePair* const pair, const char* const value )
 {
+    if ( NULL == pair || NULL == value )
+    {
+        return false;
+    }
+
     size_t valueLen = strlen( value );
 
     if ( MAX_VALUE_LEN < valueLen )
@@ -134,6 +154,11 @@ bool XmlKeyValuePair_TrySetValue( XmlKeyValuePair* const pair, const char* const
  */
 bool XmlKeyValuePair_TryCopy( XmlKeyValuePair* const dest, const XmlKeyValuePair* const source )
 {
+    if ( NULL == dest || NULL == source )
+    {
+        return false;
+    }
+
     return XmlKeyValuePair_TrySetPair( dest, source->Key, source->Value );
 }
 
@@ -147,6 +172,11 @@ bool XmlKeyValuePair_TryCopy( XmlKeyValuePair* const dest, const XmlKeyValuePair
  */
 const char* const XmlKeyValuePair_GetKey( const XmlKeyValuePair* const pair )
 {
+    if ( NULL == pair )
+    {
+        return NULL;
+    }
+
     return pair->Key;
 }
 
@@ -160,5 +190,10 @@ const char* const XmlKeyValuePair_GetKey( const XmlKeyValuePair* const pair )
  */
 const char* const XmlKeyValuePair_GetValue( const XmlKeyValuePair* const pair )
 {
+    if ( NULL == pair )
+    {
+        return NULL;
+    }
+
     return pair->Value;
 }

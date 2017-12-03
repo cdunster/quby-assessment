@@ -249,6 +249,19 @@ TEST( XmlDataStore_GetIndexOfKey, Given_KeyNotInDataStore_When_GettingIndexOfKey
     CHECK_EQUAL( KEY_NOT_FOUND, index );
 }
 
+TEST( XmlDataStore_GetIndexOfKey, Given_KeyIsEmpty_When_GettingIndexOfKey_Then_ReturnKeyNotFound )
+{
+    /* Given */
+    char key[ 8 ];
+    strcpy( key, "" );
+
+    /* When */
+    int32_t index = XmlDataStore_GetIndexOfKey( key );
+
+    /* Then */
+    CHECK_EQUAL( KEY_NOT_FOUND, index );
+}
+
 TEST( XmlDataStore_GetIndexOfKey, Given_KeyAtIndexThreeInDataStore_When_GettingIndexOfKey_Then_ReturnThree )
 {
     /* Given */

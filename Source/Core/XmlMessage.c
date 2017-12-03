@@ -41,6 +41,11 @@ XmlMessage* XmlMessage_Create( void )
  */
 void XmlMessage_Destroy( XmlMessage* const message )
 {
+    if ( NULL == message )
+    {
+        return;
+    }
+
     uint16_t i;
     for ( i = 0; i < MAX_NUM_DATA_SLOTS; i++ )
     {

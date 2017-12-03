@@ -270,3 +270,79 @@ TEST( GetIndexOfKey, Given_KeyAtIndexThreeInDataStore_When_GettingIndexOfKey_The
     /* Then */
     CHECK_EQUAL( 3, index );
 }
+
+TEST_GROUP( TryGetValueOfKey )
+{
+    XmlKeyValuePair* pair;
+
+    void setup( void )
+    {
+        pair = XmlKeyValuePair_Create();
+        XmlDataStore_Init();
+    }
+
+    void teardown( void )
+    {
+        XmlKeyValuePair_Destroy( pair );
+        XmlDataStore_DeInit();
+    }
+};
+
+TEST( TryGetValueOfKey, Given_KeyInDataStore_When_TryingToGetValueOfKey_Then_ReturnTrue )
+{
+    /* Given */
+    XmlKeyValuePair_TrySetPair( pair, "key1", "value1" );
+    XmlDataStore_TryAdd( pair );
+
+    /* When */
+    const char* value;
+    bool result = XmlDataStore_TryGetValueOfKey( "key1", &value );
+
+    /* Then */
+    CHECK_EQUAL( true, result );
+}
+
+TEST( TryGetValueOfKey, Given_KeyNotInDataStore_When_TryingToGetValueOfKey_Then_ReturnFalse )
+{
+    /* Given */
+    XmlKeyValuePair_TrySetPair( pair, "exampleKey", "value1" );
+    XmlDataStore_TryAdd( pair );
+
+    /* When */
+    const char* value;
+    bool result = XmlDataStore_TryGetValueOfKey( "key1", &value );
+
+    /* Then */
+    CHECK_EQUAL( false, result );
+}
+
+TEST( TryGetValueOfKey, Given_KeyInDataStore_When_TryingToGetValueOfKey_Then_GetValue )
+{
+    /* Given */
+    XmlKeyValuePair_TrySetPair( pair, "keyA", "42" );
+    XmlDataStore_TryAdd( pair );
+
+    /* When */
+    const char* value;
+    XmlDataStore_TryGetValueOfKey( "keyA", &value );
+
+    /* Then */
+    STRCMP_EQUAL( "42", value );
+}
+
+TEST( TryGetValueOfKey, Given_KeyInDataStoreWithMultipleKeys_When_TryingToGetValueOfKey_Then_GetCorrectValue )
+{
+    /* Given */
+    XmlKeyValuePair_TrySetPair( pair, "keyA", "42" );
+    XmlDataStore_TryAdd( pair );
+
+    XmlKeyValuePair_TrySetPair( pair, "keyB", "test" );
+    XmlDataStore_TryAdd( pair );
+
+    /* When */
+    const char* value;
+    XmlDataStore_TryGetValueOfKey( "keyB", &value );
+
+    /* Then */
+    STRCMP_EQUAL( "test", value );
+}

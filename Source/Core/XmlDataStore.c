@@ -103,3 +103,27 @@ int32_t XmlDataStore_GetIndexOfKey( const char* const key )
 
     return KEY_NOT_FOUND;
 }
+
+/**
+ * @brief       Try to get the value of the passed key from the data store.
+ *
+ * @param[in]   key
+ *              The key to look for the value of in the data store.
+ *
+ * @param[out]  value
+ *              Pointer to the value of the passed key from the data store.
+ *
+ * @return      true if the value is found.
+ */
+bool XmlDataStore_TryGetValueOfKey( const char* const key, const char** const value )
+{
+    int32_t indexOfKey = XmlDataStore_GetIndexOfKey( key );
+    if ( KEY_NOT_FOUND == indexOfKey )
+    {
+        return false;
+    }
+
+    *value = XmlKeyValuePair_GetValue( DataStore[ indexOfKey ] );
+
+    return true;
+}

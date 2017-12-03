@@ -30,6 +30,11 @@
 			<locationURI>PARENT-1-PROJECT_LOC/Source/Core</locationURI>
 		</link>
 		<link>
+			<name>External</name>
+			<type>2</type>
+			<locationURI>PARENT-1-PROJECT_LOC/Source/External</locationURI>
+		</link>
+		<link>
 			<name>Tests</name>
 			<type>2</type>
 			<locationURI>PARENT-1-PROJECT_LOC/Source/Tests</locationURI>

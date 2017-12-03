@@ -7,8 +7,9 @@
  */
 
 #include "XmlDataStore.h"
+#include <string.h>
 
-#define MAX_NUM_KEYS        128
+#define MAX_NUM_KEYS        128U
 
 static XmlKeyValuePair* DataStore[ MAX_NUM_KEYS ];
 static uint16_t NumberOfKeys;
@@ -20,12 +21,12 @@ static uint16_t NumberOfKeys;
  */
 void XmlDataStore_Init( void )
 {
-    /* *DataStore = (XmlKeyValuePair*) malloc( MAX_NUM_KEYS * sizeof ( *DataStore ) ); */
-    int i;
+    uint16_t i;
     for ( i = 0; i < MAX_NUM_KEYS; i++ )
     {
         DataStore[ i ] = XmlKeyValuePair_Create();
     }
+    NumberOfKeys = 0;
 }
 
 /**
@@ -35,8 +36,7 @@ void XmlDataStore_Init( void )
  */
 void XmlDataStore_DeInit( void )
 {
-    /* free( *DataStore ); */
-    int i;
+    uint16_t i;
     for ( i = 0; i < MAX_NUM_KEYS; i++ )
     {
         XmlKeyValuePair_Destroy( DataStore[ i ] );
@@ -80,4 +80,26 @@ bool XmlDataStore_TryAdd( XmlKeyValuePair* pair )
     NumberOfKeys++;
 
     return true;
+}
+
+/**
+ * @brief       Get the index of the passed key in the data store.
+ *
+ * @param[in]   key
+ *              The key to look for in the data store.
+ *
+ * @return      The index of the key or -1 if the key cannot be found.
+ */
+int32_t XmlDataStore_GetIndexOfKey( const char* const key )
+{
+    uint16_t i;
+    for ( i = 0; i < NumberOfKeys; i++ )
+    {
+        if ( 0 == strcmp( XmlKeyValuePair_GetKey( DataStore[ i ] ), key ) )
+        {
+            return i;
+        }
+    }
+
+    return KEY_NOT_FOUND;
 }

@@ -10,8 +10,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define MAX_KEY_LEN     64
-#define MAX_VALUE_LEN   64
+#define MAX_KEY_LEN     64U
+#define MAX_VALUE_LEN   64U
 
 struct XmlKeyValuePair
 {
@@ -20,12 +20,14 @@ struct XmlKeyValuePair
 };
 
 /**
- * @brief       Create a new XmlKeyValuePair by allocating memory and return the pointer to it.
+ * @brief       Create a new empty XmlKeyValuePair by allocating memory and return the pointer to it.
  * @return      Pointer to the new XmlKeyValuePair.
  */
 XmlKeyValuePair* XmlKeyValuePair_Create( void )
 {
     XmlKeyValuePair* pair = (XmlKeyValuePair*) malloc( sizeof(XmlKeyValuePair) );
+    strcpy( pair->Key, "" );
+    strcpy( pair->Value, "" );
 
     return pair;
 }

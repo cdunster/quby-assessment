@@ -93,3 +93,21 @@ bool XmlMessage_TryAddData( XmlMessage* const message, XmlKeyValuePair* const pa
 
     return true;
 }
+
+/**
+ * @brief       Get the message type of the passed XmlMessage.
+ *
+ * @param[in]   message
+ *              The message to get the type of.
+ *
+ * @return      Message type of the XmlMessage.
+ */
+XmlMessageType XmlMessage_GetMessageType( const XmlMessage* const message )
+{
+    if ( NULL == message )
+    {
+        return MSG_TYPE_INVALID;
+    }
+
+    return message->MessageType;
+}

@@ -231,3 +231,41 @@ TEST( XmlMessage_TryAddData, Given_DataWithEmptyKey_When_TryingToAddNewData_Then
     XmlMessage_Destroy( message );
     XmlKeyValuePair_Destroy( pair );
 }
+
+TEST_GROUP( XmlMessage_GetMessageType )
+{
+    void setup(void)
+    {
+    }
+
+    void teardown(void)
+    {
+    }
+};
+
+TEST( XmlMessage_GetMessageType, Given_XmlMessageHasValidType_When_GettingMessageType_Then_ReturnMessageType )
+{
+    /* Given */
+    XmlMessageType messageType = MSG_TYPE_RETRIEVE;
+    XmlMessage* message = XmlMessage_Create( messageType );
+
+    /* When */
+    XmlMessageType result = XmlMessage_GetMessageType( message );
+
+    /* Then */
+    CHECK_EQUAL( messageType, result );
+
+    XmlMessage_Destroy( message );
+}
+
+TEST( XmlMessage_GetMessageType, Given_InvalidMessagePassed_When_GettingMessageType_Then_ReturnMessageTypeInvalid )
+{
+    /* Given */
+    XmlMessage* message = NULL;
+
+    /* When */
+    XmlMessageType result = XmlMessage_GetMessageType( message );
+
+    /* Then */
+    POINTERS_EQUAL( MSG_TYPE_INVALID, result );
+}

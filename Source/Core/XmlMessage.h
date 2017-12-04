@@ -11,6 +11,16 @@
 
 typedef struct XmlMessage XmlMessage;
 
-XmlMessage* XmlMessage_Create( void );
+typedef enum XmlMessageType
+{
+    MSG_TYPE_INVALID,
+    MSG_TYPE_UPDATE,
+    MSG_TYPE_RETREIVE,
+    MSG_TYPE_STATUS,
+
+    MSG_TYPE_OUT_OF_BOUNDS
+} XmlMessageType;
+
+XmlMessage* XmlMessage_Create( XmlMessageType messageType );
 void XmlMessage_Destroy( XmlMessage* const message );
 bool XmlMessage_TryAddData( XmlMessage* const message, XmlKeyValuePair* const pair );
